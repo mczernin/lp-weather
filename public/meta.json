@@ -1,0 +1,28 @@
+{
+  "owner_email":"publishers@bergcloud.com",
+  "publication_api_version":"1.0",
+  "name":"Daily Weather",
+  "description":"Need an umbrella? What should you wear? Plan your day with the weather in your area.",
+  "delivered_on":"every day",
+  "external_configuration":true,
+  "delivered_every":"day",
+  "config":{
+    "fields": [
+        {
+          "type": "select",
+          "name": "scale",
+          "label": "Scale:",
+          "options": [
+              [
+                "Fahrenheit",
+                "fahrenheit"
+              ],
+              [
+                "Celsius",
+                "celsius"
+              ]
+            ]
+        }
+    ]
+  }
+}

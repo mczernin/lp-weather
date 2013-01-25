@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather</title>
+  <style type="text/css" media="screen">
+	body {
+		font-family: Arial;
+		text-transform: uppercase;
+		font-size:24px;
+		margin:0px;
+	}
+	
+	table {
+		margin-top:5px;
+		word-wrap: break-word;
+	}
+	
+	table td{
+	  word-wrap: break-word;
+	}
+	
+	img.weather {
+		padding-right: 12px;
+	}
+  span.dot {
+	  font-size: 16px;
+	}
+	span.heavy {
+		font-weight:900;
+	}
+  </style>
+</head>
+<body>
+<img src="/images/dotted_line_title.png"/>
+</div>
+<table>
+	<tbody>
+		<tr>
+			<td><img class="weather" src="/images/<%= @forecast[:weather_image]%>.png"/></td>
+			<td>
+			  <% if @forecast[:address] != '' %>
+				  <%= @forecast[:address]%>:
+		
+				<br/>
+				<% end %>
+				<span class="heavy"><%= @forecast[:weather_description]%></span>
+				<br/>
+				MAX: <%= @forecast[:max]%>&#176;<%= @forecast[:units]%> &#8226; MIN: <%= @forecast[:min]%>&#176;<%= @forecast[:units]%> 
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<img src="/images/dotted_line.png"/>
+</body>
+</html>

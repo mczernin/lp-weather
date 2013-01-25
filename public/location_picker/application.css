@@ -1,0 +1,313 @@
+@font-face {
+    font-family: 'Avenir Light';
+    src: url('/fonts/avenirltstd-light-webfont.eot');
+    src: url('/fonts/avenirltstd-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/avenirltstd-light-webfont.woff') format('woff'),
+         url('/fonts/avenirltstd-light-webfont.ttf') format('truetype'),
+         url('/fonts/avenirltstd-light-webfont.svg#AvenirLTStd35LightRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Avenir Medium';
+    src: url('/fonts/avenirltstd-medium-webfont.eot');
+    src: url('/fonts/avenirltstd-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/avenirltstd-medium-webfont.woff') format('woff'),
+         url('/fonts/avenirltstd-medium-webfont.ttf') format('truetype'),
+         url('/fonts/avenirltstd-medium-webfont.svg#AvenirLTStd65Medium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+body {
+  background-image: url(/images/bg_tile.png);
+  font-family: 'Avenir Medium';
+  color:black;
+  font-size:18px;
+  margin:0px;
+}
+
+h1, h2, h3 {
+  color: #DD603A;
+}
+
+.error {
+  color: #DD603A;
+  font-size:.7em;
+  margin: .5em 0;
+}
+
+a, .blue {
+color: #63B2D9;
+text-decoration: none;
+}
+
+a:hover {
+color: #1C5A78;
+}
+
+hr {
+  
+  display: block;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: .5em;
+  -webkit-margin-start: auto;
+  -webkit-margin-end: auto;
+  border:none;
+  
+  border-bottom: 1px solid #c9c7c4;
+  border-top:none;
+}
+
+.main {
+ 
+  width:400px;
+  margin: 0px auto;
+  position:relative;
+}
+.clearfix:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+.foot {
+  position:relative;
+
+  display: block; 
+  float:left;
+  text-align:left;
+  width:100%;
+}
+
+.inner {
+  position:relative;
+  background: url(/images/paperstrip.png) repeat-y 0 -50px ;
+  padding:30px 50px 0px 50px;
+}
+.bottom {
+  height:40px;
+  background: url(/images/paper-bottom.png) no-repeat ;
+  padding:30px 50px;
+  position:relative;
+}
+
+#cookie-warning {
+  width:100%;
+  background-color:#63B2D9;
+  color:white;
+  font-size: .7em;
+  padding:.7em;
+  text-align:center;
+}
+
+button {
+    margin: 10px 10px;
+    padding: 0px 3px;
+    font-family:Lucida Sans MS, Tahoma;
+    font-size: 14px;
+    font-weight:bold;
+    color: #000;
+    white-space:nowrap;
+    width:auto;
+    height:40px;
+    
+    
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #0086C1;
+    background-image: -moz-linear-gradient(top, #A3E7FF, #0086C1);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#A3E7FF), to(#0086C1));
+    background-image: -webkit-linear-gradient(top, #A3E7FF, #0086C1);
+    background-image: -o-linear-gradient(top, #A3E7FF, #0086C1);
+    background-image: linear-gradient(to bottom, #A3E7FF, #0086C1);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);
+    border-color: #04C #04C #002A80;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+button em{
+    vertical-align:middle;
+    margin:0 2px;
+    display:inline-block;
+    width:36px;
+    height:36px;
+    background-image: url(images/button_icon.png);      
+}
+
+
+label {
+  float:none;
+}
+
+label.wide {
+  text-align: left;
+  display:block;
+  margin-bottom:0.5em;
+}
+
+.inline {
+  width:40px;
+  display:inline-block;
+  text-align:left;
+}
+
+input#lat, input#lng {
+  color:black;
+  font-size:18px;
+  font-family: 'Avenir Medium';
+  width:247px;
+  background-color: transparent;
+  margin:0px;
+  padding:0px;
+}
+
+#legend {
+  color:#525252;
+}
+
+.input {
+  margin-top:1em;
+}
+
+#legend {
+  display:block;
+  margin: 0px;
+}
+
+.map-wrap {
+  margin-bottom:2em;
+  float: left;
+}
+
+#map {
+  margin-left: 0px;
+  margin-top: 1em;
+}
+
+
+/*-- buttons */
+/* 
+ * Button Animation
+ */
+
+@-webkit-keyframes buttonpress {
+  to {
+     background-position: -4px 4px;
+     background-color:inherit;
+  }
+}
+
+@-webkit-keyframes buttonpressshadow {
+  to {
+    background-position: -4px -4px;
+    opacity:0;
+  }
+}
+
+@-moz-keyframes buttonpress {
+  to {
+     background-position: -4px 4px;
+     background-color:inherit;
+  }
+}
+
+@-moz-keyframes buttonpressshadow {
+  to {
+    background-position: -4px -4px;
+    opacity:0;
+  }
+}
+
+@keyframes buttonpress {
+  to {
+     background-position: -4px 4px;
+     background-color:inherit;
+  }
+}
+
+@keyframes buttonpressshadow {
+  to {
+    background-position: -4px -4px;
+    opacity:0;
+  }
+}
+
+.animated_button {
+   position:relative;
+   height:66px;
+   width:158px;
+   display:inline-block;
+}
+.button_dropshadow {
+   position:absolute;
+   top:0;
+   left:0;
+   height:66px;
+   width:158px;
+   background-image: url(/images/button_shadow.png);
+   background-repeat: no-repeat;
+   z-index:1;
+}
+
+
+.button_content {
+  position:absolute;
+  top:0;
+  left:0;
+  height:51px;
+  width:158px;
+  z-index:2;
+  text-indent:-5000px;
+  background-repeat: no-repeat;
+}
+
+
+.animated_submit {
+  height:51px;
+  width:173px;
+  text-indent:-5000px;
+  border:0;
+  background-repeat: no-repeat;
+  background-color:transparent;
+  background-image: url(/images/grant_btn.png);
+}
+
+.animated_button:active .button_dropshadow {
+  -webkit-animation-name: buttonpressshadow;
+  -webkit-animation-duration: 100ms;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-name: buttonpressshadow;
+  -moz-animation-duration: 100ms;
+  -moz-animation-fill-mode: forwards;
+  animation-name: buttonpressshadow;
+  animation-duration: 100ms;
+  animation-fill-mode: forwards;
+}
+
+.animated_button:active .button_content,
+.animated_submit:active {
+  -webkit-animation-name: buttonpress;
+  -webkit-animation-duration: 100ms;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-name: buttonpress;
+  -moz-animation-duration: 100ms;
+  -moz-animation-fill-mode: forwards;
+  animation-name: buttonpress;
+  animation-duration: 100ms;
+  animation-fill-mode: forwards;
+}

@@ -1,0 +1,1 @@
+{ "search_api": { "result": [ { "areaName": [ {"value": "Hull" } ],  "country": [ {"value": "United States Of America" } ], "latitude": "37.487", "longitude": "-81.844", "population": "0",  "region": [ {"value": "West Virginia" } ],  "weatherUrl": [ {"value": "http:\/\/www.worldweatheronline.com\/Hull-weather\/West-Virginia\/US.aspx" } ] } ] }}

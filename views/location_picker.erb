@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang='en'>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+	<link rel="stylesheet" href="/location_picker/themes/base/jquery.ui.all.css">
+	<link rel="stylesheet" href="/location_picker/location_picker.css">
+	<link rel="stylesheet" href="/location_picker/application.css">
+	
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+	<script src="/location_picker/lib/jquery-1.4.4.min.js"></script>
+	<script src="/location_picker/lib/jquery-ui-1.8.7.min.js"></script>
+	<script src="/location_picker/src/jquery.ui.addresspicker.js"></script>
+	<script>
+	$(function() {
+		var addresspicker = $( "#addresspicker" ).addresspicker();
+		var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
+			regionBias: "uk",
+		  elements: {
+		    map:      "#map",
+		    lat:      "#lat",
+		    lng:      "#lng",
+		    lat_in:      "#lat_in",
+		    lng_in:      "#lng_in",
+		    locality: '#locality',
+		    administrative_area_level_2: '#administrative_area_level_2',
+		    administrative_area_level_1: '#administrative_area_level_1',
+		    country:  '#country',
+		    postal_code: '#postal_code',
+        type:    '#type' 
+		  }
+		});
+		var gmarker = addresspickerMap.addresspicker( "marker");
+		gmarker.setVisible(true);
+		addresspickerMap.addresspicker( "updatePosition");
+
+	});
+	</script>
+	<script>
+	function checkEnter(e){
+    e = e || event;
+	  return (e.keyCode || event.which || event.charCode || 0) !== 13;
+	}
+	</script>
+	
+  </head>
+  <body>
+    <div id='cookie-warning'>Cookies are required to use this website. Continue to use this site as normal if you are OK with this.</div>
+  <div class="demo main">
+    
+    <div class='inner clearfix'>
+      <img src='/images/BERGCloud_red-PNG.png'/>
+      <hr/>
+      <h2>Nearly done!</h2>
+      
+      <p>Where would you like a forecast for? Type a location in the address box.</p>
+    	<form method='post' action="/configure/" onkeypress="return checkEnter(event)">
+    	  <% if @error %>
+    	    <p class='error'><%= @error %></p>
+    	  <% end %>
+    	  <div class='input'>
+    	    <label class='wide' for="addresspicker_map" >Address : </label> <input id="addresspicker_map" name='address' value="" placeholder="London"/>   <br/>
+    			<input  type='hidden' id="lat"  disabled=disabled value="">
+    			<input  type='hidden' id="lng" disabled=disabled  value="">
+    			<input type='hidden' name='latitude' id="lat_in">
+    			<input type='hidden' name='longitude' id="lng_in">
+          <input type='hidden' name='return_url' value='<%=@return_url %>'>
+          <input type='hidden' name='error_url' value='<%=@error_url %>'>
+        </div>
+        <div class='map-wrap'>
+          <div id="map"></div>
+        </div>
+        <input type='submit' ontouchstart="" class="animated_submit grant-btn"/>
+        <p>Actually, I'd rather not.<br/>
+        <a href='<%=@error_url%>'>Take me back to BERG Cloud</a>
+        </p>
+      </form>
+      
+      
+      <div class='foot'>
+        <hr/>
+      </div>
+    </div>
+    <div class="bottom"></div>
+  </div><!-- End demo -->
+
+  </html>
+
+  
+</body>
+<footer>
+    <div class="Footer">
+    </div>
+</footer>
+</html>
