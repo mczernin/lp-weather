@@ -24,7 +24,7 @@ get '/edition/' do
       if params["address"]
         location = params["address"]
       else 
-        return 500
+        return 500, 'No address provided'
       end
     end
     
@@ -39,12 +39,15 @@ get '/edition/' do
 
     begin
       # Get the forecast
+      p location
+      p address
+      p scale
       @forecast = Weather.fetch_data(location, address, scale)
       success = true
-    rescue NetworkError
-      return 502
-    rescue PermanentError
-      return 500
+    rescue NetworkError => e
+      return 502, "Network Error: #{e}"
+    rescue PermanentError => e
+      return 500, "Permanent Error: #{e}"
     end
   end
 
