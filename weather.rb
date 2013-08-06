@@ -1,7 +1,7 @@
-require 'sinatra/contrib'
-
-
 require 'rest-client'
+require 'yaml'
+
+
 class Weather
   CONTENT_URL = "http://free.worldweatheronline.com/feed/weather.ashx?"
   
@@ -14,8 +14,8 @@ class Weather
     if ENV['WEATHER_KEY'] != nil
       return ENV['WEATHER_KEY']
     else
-      config_file './config.yml'
-      return settings.weather_api_key
+      config = YAML.load_file('./config.yml')
+      return config['weather_api_key']
     end
   end
   
