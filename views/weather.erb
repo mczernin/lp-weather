@@ -29,7 +29,7 @@
 			margin-top: 3px;
 		}
 		.weather-forecast {
-			padding-left: 6px;
+			padding-left: 12px;
 			display: inline-block;
 			word-wrap: break-word;
 			width: 272px;
@@ -53,8 +53,7 @@
 <img src="/images/dotted_line_title.png"/>
 
 <div class="weather">
-	<img class="weather-icon" src="/images/<%= @forecast[:weather_image]%>.png"/>
-	<p class="weather-forecast">
+	<img class="weather-icon" src="/images/<%= @forecast[:weather_image]%>.png" width="100" height="100"/><p class="weather-forecast">
 		<span class="heavy"><%= @forecast[:weather_description]%></span><br />
 		MIN: <%= @forecast[:min].to_f.round() %>&#176;<%= @forecast[:units] %> &#8226; MAX: <%= @forecast[:max].to_f.round() %>&#176;<%= @forecast[:units] %> 
 		<% if @forecast[:precip_probability].to_f > 0 %>
