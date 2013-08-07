@@ -39,9 +39,6 @@ get '/edition/' do
 
     begin
       # Get the forecast
-      p location
-      p address
-      p scale
       @forecast = Weather.fetch_data(location, address, scale)
       success = true
     rescue NetworkError => e
@@ -60,33 +57,16 @@ post '/validate_config/' do
   response[:errors] = []
   config = JSON.parse(params[:config])
   
-  success = false
-  valid = false
-  err_count = 0
-  location = ERB::Util::url_encode(config["location"])
-  
-  while !success
-    begin
-      valid = Weather.location_is_valid(location)
-      success = true
-    rescue NetworkError
-      err_count += 1
-      return 502 if err_count == 3
-    rescue PermanentError
-      err_count += 1
-      return 500 if err_count == 3
-    end
-  end
-
-  if valid
+  if ['celsius', 'farenheit'].include? config['scale']
     response[:valid] = true
   else
     response[:valid] = false
-    response[:errors] << "Unable to find the location of #{config['location']}"
-  end 
+    response[:errors] << "'#{config['scale']}' is not a valid scale"
+  end
 
   response.to_json
 end
+
 
 get '/sample/' do
   @forecast = Weather::SAMPLE_DATA

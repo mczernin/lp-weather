@@ -7,7 +7,9 @@
 		font-family: Arial;
 		text-transform: uppercase;
 		font-size:24px;
-		margin:0px;
+		margin: 0;
+		width: 384px;
+		padding: 0;
 	}
 	
 	table {
@@ -38,14 +40,17 @@
 		<tr>
 			<td><img class="weather" src="/images/<%= @forecast[:weather_image]%>.png"/></td>
 			<td>
-			  <% if @forecast[:address] != '' %>
-				  <%= @forecast[:address]%>:
-		
-				<br/>
+				<% if @forecast[:address] != '' %>
+					<%= @forecast[:address][/([^,]+,?(?:[^,]*))/] %>:
+					<br/>
 				<% end %>
 				<span class="heavy"><%= @forecast[:weather_description]%></span>
 				<br/>
-				MAX: <%= @forecast[:max]%>&#176;<%= @forecast[:units]%> &#8226; MIN: <%= @forecast[:min]%>&#176;<%= @forecast[:units]%> 
+				MAX: <%= @forecast[:max].to_f.round() %>&#176;<%= @forecast[:units] %> &#8226; MIN: <%= @forecast[:min].to_f.round() %>&#176;<%= @forecast[:units] %> 
+				<% if @forecast[:precip_probability] > 0 %>
+					<br />
+					<%= (@forecast[:precip_probability] * 100).round() %>% chance of&nbsp;<%= @forecast[:precip_type] %>
+				<% end %>
 			</td>
 		</tr>
 	</tbody>
