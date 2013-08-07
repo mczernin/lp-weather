@@ -27,8 +27,10 @@ describe 'Publication' do
       :address => @address,
       :weather_image => 'sunny',
       :weather_description => 'Sunny',
-      :min => '10',
+      :min => '11',
       :max => '15',
+      :precip_type => 'rain',
+      :precip_probability => '0.3',
       :units => 'C'
     }
   end
@@ -39,11 +41,16 @@ describe 'Publication' do
      get "/edition/?location=#{URI.escape(@location)}&address=#{URI.escape(@address)}&scale=#{@scale}"
      last_response.should be_ok
      
+     new_address = @forecast[:address][/([^,]+,?(?:[^,]*))/].gsub(/(.*)( )(.*)/, '\1&nbsp;\3')
+     precipitation = (@forecast[:precip_probability].to_f * 100).round().to_s
+
      # should include location/forecast/etc
-     last_response.body.scan(@forecast[:address]).length.should == 1
+     last_response.body.scan(new_address).length.should == 1
      last_response.body.scan("#{@forecast[:weather_image]}.png").length.should == 1
      last_response.body.scan(@forecast[:min]).length.should == 1
      last_response.body.scan(@forecast[:max]).length.should == 1
+     last_response.body.scan(@forecast[:precip_type]).length.should == 1
+     last_response.body.scan(precipitation).length.should == 1
      
     end
 
@@ -108,50 +115,12 @@ describe 'Publication' do
     end
   end
   
-  describe 'post to validation' do
-    
-    # Validation is done by an external website. Obvs we don't want to test that that works, only that we handle whatever it returns correctly
-    
-    # Valid address works
-    it 'should return response valid = true for an address that is valid' do
-      location = '51.5215,0.1389'
-      
-      Weather.should_receive(:location_is_valid).exactly(1).times.and_return(true)
-      post '/validate_config/', :config => {:location => location}.to_json
-      resp = JSON.parse(last_response.body)
-      resp['valid'].should == true
-    end
-    
-    # Invalid address does not work
-    it 'should return response valid = false for an address that is not valid. This should also include an error message from the third party' do
-      location = '51.5215,0.1389'
-      
-      Weather.should_receive(:location_is_valid).exactly(1).times.and_return(false)
-      post '/validate_config/', :config => {:location => location}.to_json
-      resp = JSON.parse(last_response.body)
-      resp['valid'].should == false
-      resp['errors'].should == ["Unable to find the location of #{location}"]
-    end
-    
-    # Failiure to validate with an error is retried twice before returning a 502
-    it 'should retry if the call fails at a network level then return a 502' do
-      location = '51.5215,0.1389'
-      
-      Weather.should_receive(:location_is_valid).exactly(3).times.and_raise(NetworkError)
-
-      post '/validate_config/', :config => {:location => location}.to_json
-      last_response.status.should == 502
-      
-    end
-
-  end
-  
-  
   describe 'get a sample' do
   
-    it 'should return some html for get requests to /sample.html' do
+    it 'should return some html for get requests to /sample/' do
       get '/sample/'
-      last_response.body.scan(Weather::SAMPLE_DATA[:location]).length.should == 1
+      address = Weather::SAMPLE_DATA[:address][/([^,]+,?(?:[^,]*))/].gsub(/(.*)( )(.*)/, '\1&nbsp;\3')
+      last_response.body.scan(address).length.should == 1
       last_response.body.scan(Weather::SAMPLE_DATA[:weather_description]).length.should == 1
     end
     
@@ -191,19 +160,23 @@ describe 'Weather' do
     
   describe "#fetch_data" do 
     before(:each) do
-      @location = "W1T 4JZ"
+      @location = "51.5229965,-0.08712990000003629"
       @address = 'The BT Tower'
+      @exclude = 'minutely,hourly,flags'
 
       @scale = 'celsius'
+      @units = 'uk'
       
-      @weather_url = "http://free.worldweatheronline.com/feed/weather.ashx?format=json&key=#{settings.weather_api_key}&num_of_days=1&query=#{URI.escape(@location)}"
+      @weather_url = "https://api.forecast.io/forecast/#{settings.weather_api_key}/#{URI.escape(@location)}?exclude=#{URI.escape(@exclude)}&units=#{@units}"
       @forecast = { 
         :location => @location,
         :address => @address,
         :weather_image => 'sunny',
         :weather_description => 'Sunny',
-        :min => '10',
+        :min => '11',
         :max => '15',
+        :precip_type => 'rain',
+        :precip_probability => '0.3',
         :units => 'C'
       }
     end
@@ -214,7 +187,7 @@ describe 'Weather' do
       return_content = file.read
       
       stub_request(:get, @weather_url).
-        with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
+        with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v0.8.8'}).
         to_return(:status => 200, :body => return_content, :headers => {})
  
             
@@ -230,6 +203,8 @@ describe 'Weather' do
       weather[:min].should_not == ""
       weather[:max].should_not == ""
       weather[:weather_image].should_not == ""
+      weather[:precipIntensity].should_not == ""
+      weather[:precipType].should_not == ""
     end
   
   
@@ -263,47 +238,4 @@ describe 'Weather' do
      end
   end
   
-  describe 'location_valid?' do
-    before(:each) do
-      @location='York'
-      @search_url = "http://www.worldweatheronline.com/feed/search.ashx?format=json&key=#{settings.weather_api_key}&num_of_results=1&query=#{URI.escape(@location)}"
-      
-    end
-    
-    
-    it '# should return true for a valid location' do
-      stub_request(:get, @search_url).
-        with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
-        to_return(:status => 200, :body => File.open('spec_assets/location_success.json'), :headers => {})
-      
-      Weather.location_is_valid(@location).should == true
-    end
-    
-    it '#should return false for an invalid location' do
-      stub_request(:get, @search_url).
-      with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => File.open('spec_assets/location_fail.json'), :headers => {})
-      Weather.location_is_valid(@location).should == false
-    end
-
-    
-    it '#should raise a Network error for a timeout' do
-      stub_request(:any, @search_url).to_timeout 
-      
-      lambda {
-        Weather.location_is_valid @location
-        }.should raise_error()
-    end
-    
-    it '#should raise a Parse error for a problem parsing' do
-        stub_request(:get, @search_url).
-        with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
-        to_return(:status => 200, :body => File.open('spec_assets/location_parse_fail.xml'), :headers => {})
-
-      lambda {
-        Weather.location_is_valid @location
-        }.should raise_error(PermanentError)
-    end
-    
-  end
 end

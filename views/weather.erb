@@ -57,24 +57,16 @@
 	<p class="weather-forecast">
 		<span class="heavy"><%= @forecast[:weather_description]%></span><br />
 		MIN: <%= @forecast[:min].to_f.round() %>&#176;<%= @forecast[:units] %> &#8226; MAX: <%= @forecast[:max].to_f.round() %>&#176;<%= @forecast[:units] %> 
-		<% if @forecast[:precip_probability] > 0 %>
+		<% if @forecast[:precip_probability].to_f > 0 %>
 			<br />
-			<%= (@forecast[:precip_probability] * 100).round() %>% chance of&nbsp;<%= @forecast[:precip_type] %>
+			<%= (@forecast[:precip_probability].to_f * 100).round() %>% chance of&nbsp;<%= @forecast[:precip_type] %>
 		<% end %>
 	</p>
 </div>
 
 <p class="address">
 	<% if @forecast[:address] != '' %>
-		<%#
-		If the address is very long, we trim to the first two clauses, so 
-		"Kennington, London Borough of Lambeth, London SE11, UK"
-		becomes
-		"Kennington, London Borough of Lambeth"
-
-		Also, we replace the final space with &nbsp; to prevent widows.
-		%>
-		<%= @forecast[:address][/([^,]+,?(?:[^,]*))/].gsub(/(.*)( )(.*)/, '\1&nbsp;\3') %>
+		<%= prevent_widows(trim_address(@forecast[:address])) %>
 	<% end %>
 </p>
 

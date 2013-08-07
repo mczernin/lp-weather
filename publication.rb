@@ -3,6 +3,23 @@ require 'json'
 require './weather'
 require 'date'
 
+helpers do
+
+  # If the address is very long, we trim to the first two clauses, so 
+  # "Kennington, London Borough of Lambeth, London SE11, UK"
+  # becomes
+  # "Kennington, London Borough of Lambeth"
+  def trim_address(address)
+    return address[/([^,]+,?(?:[^,]*))/]
+  end
+
+  # Replaces the final space in a string with '&nbsp;'.
+  def prevent_widows(str)
+    str.gsub(/(.*)( )(.*)/, '\1&nbsp;\3')
+  end
+
+end
+
 
 # Returns today's edition of weather.
 # Excpects a human-friendly address, a location (probably a lat-long), and optionally a scale.

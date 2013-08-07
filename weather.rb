@@ -37,8 +37,8 @@ class Weather
 
     begin 
       forecast = ForecastIO.forecast(latlon[0], latlon[1], params: params)
-    rescue
-      raise NetworkError, "Something went wrong fetching forecast"
+    rescue => e
+      raise NetworkError, "Something went wrong fetching forecast: #{e}"
     end
 
     if forecast.nil?
@@ -137,33 +137,6 @@ class Weather
     end
   end
 
-
-
-  # Check that the location that has been given by the user is one worldweatheronline understands
-  def self.location_is_valid location
-
-    validation_url = "http://www.worldweatheronline.com/feed/search.ashx?query=#{location}&num_of_results=1&format=json&key=#{Weather::api_key}"
-
-    begin
-      weather = RestClient.get(validation_url)
-    rescue RestClient::ServiceUnavailable
-      raise NetworkError, "ServiceUnavailable was received from #{validation_url}"
-    rescue Timeout::Error
-      raise NetworkError, "Connection to #{validation_url} timed out!"
-    end
-    
-    begin
-      weather_content =  JSON.parse(weather)
-    rescue 
-      raise PermanentError, 'there was an error parsing the JSON'
-    end
-    
-    if weather_content['search_api'].nil?
-      return false
-    else
-      return true
-    end
-  end
 end
 
 class PermanentError < StandardError; end
