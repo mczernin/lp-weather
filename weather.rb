@@ -6,7 +6,7 @@ class Weather
   CONTENT_URL = "http://free.worldweatheronline.com/feed/weather.ashx?"
   
   # Wishful thinking :(
-  SAMPLE_DATA = {:location => "London", :address=>"London", :weather_image => "sunny", :weather_description => "Sunny throughout the day.", :min => 20, :max => 24, :units => "C"}
+  SAMPLE_DATA = {:location => "London, UK", :address=>"London, UK", :weather_image => "sunny", :weather_description => "Sunny throughout the day.", :min => 20, :max => 24, :precip_probability => 0.1, :precip_type => 'rain', :units => "C"}
   
   def self.api_key
     
