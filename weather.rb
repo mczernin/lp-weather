@@ -124,10 +124,10 @@ class Weather
       'heavy_cloud'
 
     when 'partly-cloudy-day'
-      'sunny_intervals'
+      'light_cloud'
 
     when 'partly-cloudy-night'
-      'sunny_intervals'
+      'light_cloud'
 
     when 'thunderstorm'
       'thunder'
