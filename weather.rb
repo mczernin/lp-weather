@@ -114,8 +114,7 @@ class Weather
       end
 
     when 'wind'
-      # TODO
-      'blank_icon'
+      'wind'
 
     when 'fog'
       'fog'
