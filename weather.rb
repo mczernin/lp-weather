@@ -67,6 +67,7 @@ class Weather
       :max => forecast['daily']['data'][0]['temperatureMax'],
       :precip_type => forecast['daily']['data'][0]['precipType'],
       :precip_probability => forecast['daily']['data'][0]['precipProbability'],
+      :precip_intensity => forecast['daily']['data'][0]['precipIntensity'],
       :units => units,
       :original_icon => forecast['daily']['data'][0]['icon']
     }
