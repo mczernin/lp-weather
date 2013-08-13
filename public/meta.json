@@ -5,7 +5,7 @@
   "description":"Need an umbrella? What should you wear? Plan your day with the weather in your area. (forecast source: Forecast.io)",
   "delivered_on":"every day",
   "external_configuration":true,
-  "delivered_every":"day",
+  "delivery_type": "fetch",
   "config":{
     "fields": [
         {
