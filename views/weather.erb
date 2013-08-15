@@ -2,8 +2,6 @@
 <html>
 <head>
   <title>Weather</title>
-	<!-- Original icon: <%= @forecast[:original_icon] %> -->
-	<!-- Intensity: <%= @forecast[:precip_intensity] %> -->
   <style type="text/css" media="screen">
 	body {
 		font-family: Arial;
@@ -73,5 +71,8 @@
 </p>
 
 <img src="/images/dotted_line.png"/>
+
+<p><%= @forecast[:original_icon] %> <%= @forecast[:precip_intensity] %></p>
+
 </body>
 </html>
