@@ -87,23 +87,19 @@ class Weather
       'sunny'
 
     when 'rain'
-      if precip_intensity <= 0.002
-        'light_showers'
-      elsif precip_intensity <= 0.017
-        'light_rain'
-      elsif precip_intensity <= 0.1
-        'heavy_showers'
+      if precip_intensity <= 0.1
+        'light_showers' # white cloud, one drop
+      elsif precip_intensity < 0.4
+        'light_rain'    # black cloud, one drop
       else
-        'heavy_rain'
+        'heavy_rain'    # black cloud, two drops
       end
 
     when 'snow'
-      if precip_intensity <= 0.002
+      if precip_intensity <= 0.1
         'light_snow_showers'
-      elsif precip_intensity <= 0.017
+      elsif precip_intensity < 0.4
         'light_snow'
-      elsif precip_intensity <= 0.1
-        'heavy_snow_showers'
       else
         'heavy_snow'
       end
@@ -125,10 +121,10 @@ class Weather
       'heavy_cloud'
 
     when 'partly-cloudy-day'
-      'light_cloud'
+      'partly_cloudy'
 
     when 'partly-cloudy-night'
-      'light_cloud'
+      'partly_cloudy'
 
     when 'thunderstorm'
       'thunder'
