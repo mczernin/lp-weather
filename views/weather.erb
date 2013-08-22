@@ -72,7 +72,13 @@
 
 <img src="/images/dotted_line.png"/>
 
-<p><%= @forecast[:original_icon] %> <%= @forecast[:precip_intensity] %></p>
+<p><%= @forecast[:original_icon] %> 
+<% if @forecast[:units] == 'C' %>
+	<%= @forecast[:precip_intensity] / 25.4 %>
+<% else %>
+	<%= @forecast[:precip_intensity] %>
+<% end %>
+</p>
 
 </body>
 </html>

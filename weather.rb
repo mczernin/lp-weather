@@ -1,4 +1,5 @@
 require 'forecast_io'
+require 'pp'
 require 'yaml'
 
 
@@ -26,9 +27,9 @@ class Weather
     return SAMPLE_DATA if is_test
 
     latlon = location.split(',')
-    params = {units: 'uk'} # temp in C, speed in mph
+    params = {units: 'uk'} # temp in C, rain levels in mm, speed in mph
     if scale == 'farenheit'
-      params[:units] = 'us' # temp in F, speed in mph
+      params[:units] = 'us' # temp in F, rain levels in inches, speed in mph
     end
 
     params[:exclude] = 'minutely,hourly,flags'
@@ -61,7 +62,8 @@ class Weather
       :address => address,
       :weather_image => extract_condition(
                                   forecast['daily']['data'][0]['icon'],
-                                  forecast['daily']['data'][0]['precipIntensity']),
+                                  forecast['daily']['data'][0]['precipIntensity'],
+                                  params[:units]),
       :weather_description => forecast['daily']['data'][0]['summary'],
       :min => forecast['daily']['data'][0]['temperatureMin'],
       :max => forecast['daily']['data'][0]['temperatureMax'],
@@ -77,7 +79,13 @@ class Weather
 
   # Translating Forecast's icon names and precipitation intensity into the 
   # icons we already had which we used with WorldWeatherOnline.
-  def self.extract_condition(icon, precip_intensity) 
+  # units is either 'uk' or 'us'. Affects the measurement of precip_intensity.
+  def self.extract_condition(icon, precip_intensity, units) 
+
+    if ['si', 'uk', 'ca'].include? units
+      # Convert the mm to inches.
+      precip_intensity = precip_intensity / 25.4
+    end
 
     case icon
     when 'clear-day'
@@ -87,25 +95,25 @@ class Weather
       'sunny'
 
     when 'rain'
-      if precip_intensity <= 0.1
+      if precip_intensity <= 0.002
         'light_showers' # white cloud, one drop
-      elsif precip_intensity < 0.4
+      elsif precip_intensity <= 0.017
         'light_rain'    # black cloud, one drop
       else
         'heavy_rain'    # black cloud, two drops
       end
 
     when 'snow'
-      if precip_intensity <= 0.1
+      if precip_intensity <= 0.002
         'light_snow_showers'
-      elsif precip_intensity < 0.4
+      elsif precip_intensity <= 0.017
         'light_snow'
       else
         'heavy_snow'
       end
 
     when 'sleet'
-      if precip_intensity <= 0.1
+      if precip_intensity <= 0.017
         'sleet_showers'
       else
         'sleet'
