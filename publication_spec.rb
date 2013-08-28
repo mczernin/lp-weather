@@ -27,8 +27,8 @@ describe 'Publication' do
       :address => @address,
       :weather_image => 'sunny',
       :weather_description => 'Sunny',
-      :min => '11',
-      :max => '15',
+      :min => '24',
+      :max => '28',
       :precip_type => 'rain',
       :precip_probability => '0.3',
       :units => 'C'
