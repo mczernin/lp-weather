@@ -10,7 +10,7 @@
 		line-height: 27px;
 		margin: 0;
 		width: 384px;
-		padding: 10px 0;
+		padding: 10px 0 15px 0;
 	}
 	p {
 		margin: 0;
@@ -47,6 +47,12 @@
 		line-height: 19px;
 		text-align: center;
 	}
+	.credit {
+		font-size: 17px;
+		line-height: 19px;
+		text-align: right;
+		text-transform: none;
+	}
   </style>
 </head>
 <body>
@@ -72,13 +78,19 @@
 
 <img src="/images/dotted_line.png"/>
 
-<p><%= @forecast[:original_icon] %> 
+<p class="credit">
+	Powered by Forecast
+</p>
+
+<!--
+Debugging stuff...
+<%= @forecast[:original_icon] %> 
 <% if @forecast[:units] == 'C' %>
 	<%= @forecast[:precip_intensity] / 25.4 %>
 <% else %>
 	<%= @forecast[:precip_intensity] %>
 <% end %>
-</p>
+-->
 
 </body>
 </html>
