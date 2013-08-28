@@ -3,7 +3,6 @@ require 'yaml'
 
 
 class Weather
-  CONTENT_URL = "http://free.worldweatheronline.com/feed/weather.ashx?"
   
   # Wishful thinking :(
   SAMPLE_DATA = {:location => "London, UK", :address=>"London, UK", :weather_image => "sunny", :weather_description => "Sunny throughout the day.", :min => 20, :max => 24, :precip_probability => 0.1, :precip_type => 'rain', :units => "C"}
@@ -11,11 +10,11 @@ class Weather
   def self.api_key
     
     # If there is an env variable with the key, use that, else look in config.yml
-    if ENV['WEATHER_KEY'] != nil
-      return ENV['WEATHER_KEY']
+    if ENV['FORECAST_API_KEY'] != nil
+      return ENV['FORECAST_API_KEY']
     else
       config = YAML.load_file('./config.yml')
-      return config['weather_api_key']
+      return config['forecast_api_key']
     end
   end
   

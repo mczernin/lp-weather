@@ -15,11 +15,11 @@ The publication requires an API key from https://developer.forecast.io/ . This c
 
 Environment variable:
 
-    WEATHER_KEY=yourkeyhere
+    FORECAST_API_KEY=yourkeyhere
 
 `config.yml`:
 
-    weather_api_key: yourkeyhere
+    forecast_api_key: yourkeyhere
 
 
 ## Tests

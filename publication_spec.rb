@@ -167,7 +167,7 @@ describe 'Weather' do
       @scale = 'celsius'
       @units = 'uk'
       
-      @weather_url = "https://api.forecast.io/forecast/#{settings.weather_api_key}/#{URI.escape(@location)}?exclude=#{URI.escape(@exclude)}&units=#{@units}"
+      @weather_url = "https://api.forecast.io/forecast/#{settings.forecast_api_key}/#{URI.escape(@location)}?exclude=#{URI.escape(@exclude)}&units=#{@units}"
       @forecast = { 
         :location => @location,
         :address => @address,
