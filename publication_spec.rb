@@ -134,7 +134,7 @@ describe 'Publication' do
       json = JSON.parse(last_response.body)
       json["name"].should_not == nil
       json["description"].should_not == nil
-      json["delivered_every"].should_not == nil
+      json["delivered_on"].should_not == nil
     end
   
   end
