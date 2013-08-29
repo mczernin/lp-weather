@@ -121,7 +121,7 @@ describe 'Publication' do
       get '/sample/'
       address = Weather::SAMPLE_DATA[:address][/([^,]+,?(?:[^,]*))/].gsub(/(.*)( )(.*)/, '\1&nbsp;\3')
       last_response.body.scan(address).length.should == 1
-      last_response.body.scan(Weather::SAMPLE_DATA[:weather_description]).length.should == 1
+      last_response.body.scan(Weather::SAMPLE_DATA[:weather_description].chomp('.')).length.should == 1
     end
     
   end
