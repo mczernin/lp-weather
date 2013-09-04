@@ -74,7 +74,7 @@ post '/validate_config/' do
   response[:errors] = []
   config = JSON.parse(params[:config])
   
-  if ['celsius', 'farenheit'].include? config['scale']
+  if ['celsius', 'fahrenheit'].include? config['scale']
     response[:valid] = true
   else
     response[:valid] = false
