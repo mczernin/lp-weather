@@ -15,7 +15,7 @@ describe 'Publication' do
   def app
     Sinatra::Application
   end
-  
+
   before(:each) do
     WebMock.disable_net_connect!(:allow_localhost => true)
     @location = "W1T 4JZ"
@@ -35,6 +35,15 @@ describe 'Publication' do
     }
   end
   
+  # Can't get this to work at all. Keep getting:
+  # undefined method `config' for Sinatra::Application:Class (NoMethodError)
+  # Time to move on and do something else.
+  #describe 'validate_config' do
+    #post '/validate_config/', :config => {'scale' => 'celsius'}.to_json
+    #p last_response.body
+  #end
+
+
   describe 'edition' do
    it 'should return html for a get with location, address and scale' do
      Weather.should_receive(:fetch_data).with(@location, @address, @scale).and_return(@forecast)
@@ -144,7 +153,7 @@ describe 'Publication' do
   
     it 'should return a png for /icon' do
       get '/icon.png'
-      last_response['Content-Type'].should == 'image/png'
+      last_response['Content-Type'].should = 'image/png'
     end
     
   end
