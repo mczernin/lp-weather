@@ -35,15 +35,6 @@ describe 'Publication' do
     }
   end
   
-  # Can't get this to work at all. Keep getting:
-  # undefined method `config' for Sinatra::Application:Class (NoMethodError)
-  # Time to move on and do something else.
-  #describe 'validate_config' do
-    #post '/validate_config/', :config => {'scale' => 'celsius'}.to_json
-    #p last_response.body
-  #end
-
-
   describe 'edition' do
    it 'should return html for a get with location, address and scale' do
      Weather.should_receive(:fetch_data).with(@location, @address, @scale).and_return(@forecast)
@@ -124,6 +115,17 @@ describe 'Publication' do
     end
   end
   
+  describe 'validate_config' do
+    it 'should accept only valid scales' do
+      ['celsius', 'fahrenheit'].each do |scale|
+        post '/validate_config/', :config => {'scale' => scale}.to_json
+        JSON.parse(last_response.body)['valid'].should be_true
+      end
+      post '/validate_config/', :config => {'scale' => 'ice cream'}.to_json
+      JSON.parse(last_response.body)['valid'].should be_false
+    end
+  end
+
   describe 'get a sample' do
   
     it 'should return some html for get requests to /sample/' do
@@ -153,7 +155,7 @@ describe 'Publication' do
   
     it 'should return a png for /icon' do
       get '/icon.png'
-      last_response['Content-Type'].should = 'image/png'
+      last_response['Content-Type'].should eq('image/png')
     end
     
   end
