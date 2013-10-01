@@ -5,7 +5,7 @@ require 'yaml'
 class Weather
   
   # Wishful thinking :(
-  SAMPLE_DATA = {:location => "London, UK", :address=>"London, UK", :weather_image => "sunny", :weather_description => "Sunny throughout the day.", :min => 20, :max => 24, :precip_probability => 0.1, :precip_type => 'rain', :units => "C"}
+  SAMPLE_DATA = {:location => "London, UK", :address=>"London, UK", :units => "C"}
   
   def self.api_key
     
